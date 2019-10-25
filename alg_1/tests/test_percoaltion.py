@@ -28,4 +28,26 @@ def test_per():
     assert p.percolates()
 
 
+def test_per2():
+    p = per.Percolation(10)
+
+    for i in range(6):
+        p.openSite(i, 0)
+
+    assert not p.percolates()
+
+    for i in range(9, 5, -1):
+        p.openSite(i, 1)
+
+    assert not p.percolates()
+
+    p.openSite(5, 1)
+
+    assert p.percolates()
+
+
+
+
 # test_per()
+test_per2()
+

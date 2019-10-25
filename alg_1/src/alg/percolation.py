@@ -1,3 +1,6 @@
+import random
+import math
+import time
 from alg import matrix_union_find as muf
 
 
@@ -67,3 +70,139 @@ class Percolation:
         return self.__muf.isConnected([0, 0], [self.__n + 1, 0])
 
 
+
+class PercolationStats:
+    """ Calculates statistical attributes of Percolation system
+    """
+
+    
+    def __init__(self, n:int, trials:int):
+        """ perform independent trials on an n-by-n grid
+        """
+        self.__n = n
+        self.__results = []
+        self.__mean = 0
+        self.__stdDev = 0
+        self.__confIntLow = 0
+        self.__confIntHigh = 0        
+
+        for _ in range(trials):
+            self.__results.append(self.__getCountToPercolation() / (n * n))
+
+        self.__calculateStats()
+
+
+
+    def getResults(self):
+        return self.__results
+
+
+    def __initBlockedSites(self) -> list:
+        """ Return initialized block sites list.
+            Initially are all sites blocked
+
+            Returns:
+            initialized block sites list
+        """
+        blockedSites = []
+
+        for i in range(self.__n):
+            for j in range(self.__n):
+                blockedSites.append((i, j))
+
+        return blockedSites
+
+
+
+    def __getCountToPercolation(self) -> int:
+        """ Randomly the sites are open till the system percolated
+
+            Returns:
+            Number of open sites till system percolated
+        """
+        retVal = 0
+        per = Percolation(self.__n)
+        blockedSites = self.__initBlockedSites()
+
+        while True:
+            c = self.__getRandomBlockedSite(blockedSites)
+            per.openSite(c[0],c[1])
+            retVal += 1
+            if per.percolates():
+                break
+
+        return retVal
+
+
+
+    def __getRandomBlockedSite(self, blockedSites:list) -> tuple:
+        """ Returns randomly some of the blocked sites
+
+            Returns:
+            randomly some of the blocked sites
+        """
+        idx = random.randint(0,len(blockedSites)-1)
+        return blockedSites.pop(idx)
+    
+
+    def __calculateStats(self) -> None:
+        """ Calculates all statistical attributes
+        """
+        self.__mean = sum(self.__results)/len(self.__results)
+
+        sm = 0
+        for i in self.__results:
+            sm += (i - self.__mean) ** 2
+        
+        self.__stdDev = math.sqrt(sm / (self.__n - 1))
+        self.__confIntLow = self.__mean - 1.96 * self.__stdDev / math.sqrt(self.__n)
+        self.__confIntHigh = self.__mean + 1.96 * self.__stdDev / math.sqrt(self.__n)
+
+
+    def getMean(self) -> float:
+        """ Sample mean of percolation threshold
+
+            Returns:
+            float: returns mean of percolation threshold
+        """
+        return self.__mean
+    
+    
+    def getStdDev(self) -> float:
+        """ Sample standard deviation of percolation threshold
+
+            Returns:
+            float: standard deviation of percolation threshold
+        """
+        return self.__stdDev
+
+    
+    def getConfidenceLow(self) -> float:
+        """ Low endpoint of 95% confidence interval
+
+            Returns:
+            float: low endpoint of 95% confidence interval
+        """
+        return self.__confIntLow
+
+    
+    def getConfidenceHigh(self) -> float:
+        """ High endpoint of 95% confidence interval
+
+            Returns:
+            float: high endpoint of 95% confidence interval
+        """
+        return self.__confIntHigh
+
+
+
+# Calculate and print statistics
+
+t = time.process_time()
+st = PercolationStats(200, 10)
+elapsed_time = time.process_time() - t
+
+print(f"Mean\t\t\t{st.getMean()}")    
+print(f"Standard deviation\t{st.getStdDev()}")    
+print(f"95% confidence interval [{st.getConfidenceLow()}, {st.getConfidenceHigh()}]")    
+print(f"Time elapsed\t\t{elapsed_time:.2f} s")
