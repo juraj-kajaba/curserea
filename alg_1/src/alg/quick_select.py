@@ -89,12 +89,6 @@ def qsel(arr: list, k: int) -> int:
     return arr[j]
 
 
-# arr = [7,5,4,2,3,5,6,4,2,1,8,4,3,2,3,2]
-arr = [5,4,3,20,1,34,4,21,43,10,23323,32,22]
-
-print(arr)
-print(qsel(arr, 2))
-#print(arr)
 
 
 
