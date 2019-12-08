@@ -4,18 +4,18 @@ class PQ:
      
 
     def __init__(self, keys: list = None) -> None:
-        """  Creates priority queue from given keys
+        """ Creates priority queue from given keys.
 
             Parameters:
             keys: input keys the priority queue is created from. If input
-                  parameter is None, empty key array is created
+                  parameter is None, empty key array is created. 
         """
-        self._keys = []
+        self._keys = [] # input keys
 
         if keys:
             self._keys.extend(keys)
             self._heapify()
-            
+                
 
 
     def _compare(self, leftKey, rightKey):
@@ -29,7 +29,17 @@ class PQ:
         """
         raise NotImplementedError("_compare method must be implemented.")
 
-    def _swap(self, index1, index2):
+
+    def _swap(self, index1, index2) -> None:
+        """ Swap two keys and values
+
+            Parameters:
+            index1: index of first key to be swapped
+            index2: index of second key to be swapped
+
+            Returns:
+            None
+        """
         self._keys[index1], self._keys[index2] = self._keys[index2], self._keys[index1]
 
 
@@ -94,7 +104,7 @@ class PQ:
 
 
     def _getHead(self):
-        """ Return the first element and make the heap """
+        """ Returns the first element and make the heap """
         # Swap first and last element, remove the last one,
         # and sink the first one in order to make it heap again
         self._swap(0, self.getSize() -1)
