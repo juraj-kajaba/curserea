@@ -79,6 +79,25 @@ class DictPQ(pq.PQ):
 
 
 
+    def changePriority(self, changedElem : tuple) -> None:
+        """ Change priority of key in the queue. Input parameter is
+            tuple consisting of (newPriority, key).
+
+            Parameters:
+            key: key whose priority is to be changed
+            newPriority: tuple with new priority of (newPriority, key)
+
+            Returns:
+            None
+        """
+        idx = self._values[changedElem[1]]
+        self._keys[idx] = changedElem
+        self._swim(idx)
+        self._sink(idx)
+
+
+
+
 class MaxDictPQ(DictPQ):
     """ Max priority queue implementation """
     def _compare(self, leftKey, rightKey):

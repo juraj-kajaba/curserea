@@ -39,8 +39,17 @@ def test_minDPQ_1():
     l.append((3,'1'))
 
     b = dpq.MinDictPQ(l)
-    print(b._keys)
-    print(b._values)
+
+    assert b.getMin()[1] == 'a'
+    assert b.getMin()[1] == 'b'    
+
+    # Next two elements from PQ has same priority so both result are correct
+    res = b.getMin()[1]
+    assert res == 'c' or res == '1'
+
+    res = b.getMin()[1]
+    assert res == 'c' or res == '1'
+
 
 
 
@@ -80,11 +89,43 @@ def test_maxDPQ_4():
         a.insert((3,'1'))    
 
 
+def test_minDPQ_5():
+    
+    b = dpq.MinDictPQ()
+    b.insert((1,'a'))
+    b.insert((2,'b'))
+    b.insert((3,'c'))
+    b.insert((3,'1'))
+    
+    b.changePriority((0, 'c'))
 
-test_minDPQ_1()
-test_maxDPQ_2()
-test_minDPQ_3()
-test_maxDPQ_4()
+    assert b.getMin()[1] == 'c'
+    assert b.getMin()[1] == 'a'    
+    assert b.getMin()[1] == 'b'    
+    assert b.getMin()[1] == '1'    
+
+    b = dpq.MinDictPQ()
+    b.insert((1,'a'))
+    b.insert((2,'b'))
+    b.insert((3,'c'))
+    b.insert((3,'1'))
+    
+    b.changePriority((5, 'b'))
+    b.changePriority((2, 'c'))    
+
+    assert b.getMin()[1] == 'a'
+    assert b.getMin()[1] == 'c'    
+    assert b.getMin()[1] == '1'    
+    assert b.getMin()[1] == 'b'    
+
+
+
+# test_minDPQ_1()
+# test_maxDPQ_2()
+# test_minDPQ_3()
+# test_maxDPQ_4()
+# test_minDPQ_5()
+
 
 # test_maxPQ()
 # test_minPQ()
