@@ -1,0 +1,2 @@
+# To install current project directory in editable mode into virtual environment
+pipenv install --dev -e .
