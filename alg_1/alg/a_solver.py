@@ -2,14 +2,14 @@
     is to find the sortest path in graph. Graph on the input should be instance
     of Graph class.
 """
-from graph import Graph
+from alg import graph as gr
 from typing import Callable
 from alg import dict_pq as dpq
 
 class ASolver:
     """ A* search algorithm """
 
-    def __init__(self, graph: Graph, h: Callable):
+    def __init__(self, graph: gr.Graph, h: Callable):
         """ Initializes the solver instance 
 
             Parameters:
