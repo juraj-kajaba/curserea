@@ -8,8 +8,12 @@
         "**/*.pyc": true,
         "**/__pycache__": true,
         "**/*.egg-info": true,
+<<<<<<< HEAD
         "**/*alg_1*": true,
         "**/.pytest_cache": true,
+=======
+        "**/*alg_1*": true
+>>>>>>> d31d9e01964b3ced138a9fb88114d00e4a831ddc
     },
     "python.pythonPath": "/home/jurko/.local/share/virtualenvs/alg_1-DugpuXWr/bin/python"
 }
