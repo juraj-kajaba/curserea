@@ -17,7 +17,6 @@ def swap(arr: list, i: int, j: int) -> None:
     arr[i], arr[j] = arr[j], arr[i]
 
 
-
 def partition(arr: list, lo: int, hi: int) -> int:
     """ Partition the input array in defined boundaries. 
         Partition key is first element.
@@ -32,10 +31,10 @@ def partition(arr: list, lo: int, hi: int) -> int:
 
         Returns:
         index of partitioned eleemnts
-    """    
+    """
     i = lo
     j = hi
-    k = arr[lo] # partition element
+    k = arr[lo]  # partition element
 
     while True:
         while k >= arr[i] and i < hi:
@@ -46,9 +45,9 @@ def partition(arr: list, lo: int, hi: int) -> int:
 
         if i >= j:
             break
-        
+
         swap(arr, i, j)
-            
+
     # Place partition key
     swap(arr, j, lo)
 
@@ -68,11 +67,11 @@ def partition_3w(arr: list, lo: int, hi: int) -> tuple:
 
         Returns:
         indoces of partitioned eleemnts as tuple of low and high index
-    """    
-    lt = lo # first index of partition element
-    i = lo # current index of the search
-    gt = hi # max index to be searched for
-    p = arr[lo] # partition element
+    """
+    lt = lo  # first index of partition element
+    i = lo  # current index of the search
+    gt = hi  # max index to be searched for
+    p = arr[lo]  # partition element
 
     if lo >= hi:
         return (None, None)
@@ -81,15 +80,14 @@ def partition_3w(arr: list, lo: int, hi: int) -> tuple:
         if arr[i] < p:
             swap(arr, i, lt)
             i += 1
-            lt += 1            
+            lt += 1
         elif arr[i] > p:
             swap(arr, i, gt)
             gt -= 1
         elif arr[i] == p:
             i += 1
-        
-    return (lt, gt)
 
+    return (lt, gt)
 
 
 
@@ -116,7 +114,7 @@ def qsel(arr: list, k: int) -> int:
     while True:
         j = partition(arr, lo, hi)
 
-        # Check where is partitioned eleemnt. 
+        # Check where is partitioned eleemnt.
 
         if k == j:
             break
@@ -126,7 +124,6 @@ def qsel(arr: list, k: int) -> int:
             hi = j - 1
 
     return arr[j]
-
 
 
 
@@ -167,7 +164,4 @@ def _qsort(arr: list, lo: int, hi: int) -> None:
     # As partition keys are in place sort recursively other elements
     _qsort(arr, lo, l - 1)
     _qsort(arr, h + 1, hi)
-
-
-
 

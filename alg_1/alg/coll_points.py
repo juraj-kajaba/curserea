@@ -18,7 +18,6 @@ class Point:
     def x(self):
         return self._x
 
-
     @property
     def y(self):
         return self._y
@@ -32,13 +31,11 @@ class Point:
         Return:
         True if both coordinates are same"""
         if isinstance(other, Point):
-            return self._x == other.x and self._y == other.y            
+            return self._x == other.x and self._y == other.y
         return NotImplemented
-
 
     def __ne__(self, other) -> bool:
         return not (self == other)
-
 
     def __lt__(self, other):
         """ Points are compared in X coordinate at first. If X are equals use Y coordinate
@@ -51,13 +48,11 @@ class Point:
             retVal = self._y < other.y
         else:
             retVal = False
-        
-        return retVal
 
+        return retVal
 
     def __hash__(self):
         return hash((self._x, self._y))
-
 
     def getSlopeTo(self, that: "Point") -> float:
         """ Returns slope between this and that point
@@ -70,12 +65,11 @@ class Point:
         if that.x == self._x and that.y == self._y:
             retVal = (-1) * math.inf
         elif that.x == self._x:
-            retVal = math.inf            
+            retVal = math.inf
         else:
             retVal = (that.y - self._y) / (that.x - self._x)
 
         return retVal
-
 
 
 class Utils:
@@ -84,7 +78,6 @@ class Utils:
     @staticmethod
     def areFloatsSame(f1: float, f2: float):
         return math.isclose(f1, f2, rel_tol=1e-05)
-
 
     @staticmethod
     def arePointsCollinear(pts: list) -> bool:
@@ -104,8 +97,8 @@ class Utils:
         """
 
         if pts is None or len(pts) < 2:
-            raise ValueError("Input array cannot be None of contain only one point")
-
+            raise ValueError(
+                "Input array cannot be None of contain only one point")
 
         retVal = True
         slope: float = None
@@ -124,7 +117,6 @@ class Utils:
         return retVal
 
 
-
 class LineSegment:
     """ List of collinear points """
 
@@ -141,16 +133,14 @@ class LineSegment:
     def points(self):
         return self._points
 
-
     def __repr__(self):
         return f"LineSegment: <{len(self._points)}> | <{self._points}>"
-
 
     def __eq__(self, other):
         """Overrides the default implementation"""
         if isinstance(other, LineSegment):
             return self._points == other.points
-            
+
         return NotImplemented
 
     def contains(self, other: "LineSegment") -> bool:
@@ -168,8 +158,6 @@ class LineSegment:
         return retVal
 
 
-
-
 class FindCollinearPoints:
     """ Super class for both find methods
     """
@@ -183,11 +171,9 @@ class FindCollinearPoints:
         self._points: list = points
         self._lineSegments: list = []
 
-
     @property
     def lineSegments(self):
         return self._lineSegments
-
 
     def _addLineSegment(self, ls: LineSegment) -> None:
         """ Checks if line segment is also included in line segments.
@@ -204,12 +190,9 @@ class FindCollinearPoints:
         if not alreadyIncluded:
             self._lineSegments.append(ls)
 
-
     def findLineSegments(self) -> None:
         """ Method to be implemeted in subclasses """
         raise NotImplementedError("Method must be overriden")
-
-
 
 
 class BruteCollinearPoints(FindCollinearPoints):
@@ -223,7 +206,6 @@ class BruteCollinearPoints(FindCollinearPoints):
             points: list of Point instances to find the max. collinear points
         """
         super().__init__(points)
-
 
     def findLineSegments(self) -> None:
         """ Finds all line segments and store them to be accessible via lineSegment.
@@ -239,12 +221,6 @@ class BruteCollinearPoints(FindCollinearPoints):
                 if Utils.arePointsCollinear(c):
                     ls = LineSegment(c)
                     self._addLineSegment(ls)
-
-           
-
-
-
-
 
 
 
@@ -264,9 +240,6 @@ class FastCollinearPoints(FindCollinearPoints):
         """
         super().__init__(points)
 
-
-
-
     def findLineSegments(self) -> None:
         """ Finds all line segments and store them to be accessible via lineSegment.
         """
@@ -274,14 +247,14 @@ class FastCollinearPoints(FindCollinearPoints):
         # and values as slopes to calcucate slope only once
 
         for p in self._points:
-            
+
             # Sort the list according to slope of each point to the point p
-            sortedPts = sorted(self._points, key = lambda x: p.getSlopeTo(x))
+            sortedPts = sorted(self._points, key=lambda x: p.getSlopeTo(x))
 
             # Find the groups of at least four points with the same slope
             currSlope = p.getSlopeTo(p)
             currPts = [p]
-            # First point in sorted list is always skipped (slope between point p and p is negative infinity)               
+            # First point in sorted list is always skipped (slope between point p and p is negative infinity)
             for tp in sortedPts[1:]:
                 if Utils.areFloatsSame(currSlope, p.getSlopeTo(tp)):
                     currPts.append(tp)
@@ -289,7 +262,7 @@ class FastCollinearPoints(FindCollinearPoints):
                     if len(currPts) > 3:
                         ls = LineSegment(currPts)
                         self._addLineSegment(ls)
-                    currPts = [p, tp] # create new array                        
-                    currSlope = p.getSlopeTo(tp) # start comparing with new slope            
-
+                    currPts = [p, tp]  # create new array
+                    # start comparing with new slope
+                    currSlope = p.getSlopeTo(tp)
 

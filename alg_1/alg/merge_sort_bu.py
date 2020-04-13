@@ -18,8 +18,8 @@ def merge(arr: list, left: int, middle: int, right: int, tmp: list):
             tmp[k] = arr[j]
             j += 1
             k += 1
-        
-        # Check if one array is not exhausted. If yes just copy not 
+
+        # Check if one array is not exhausted. If yes just copy not
         # exhausted array into result array tnp
         if i == middle:
             while j < right:
@@ -41,7 +41,7 @@ def merge(arr: list, left: int, middle: int, right: int, tmp: list):
 def merge_sort_bu(inArr: list):
     """ Always merge intervals as if count of elements to be sorted is pow(2,k)
         and cap the indices for merge procedure.
-        
+
         Parameters:
         inArrr: input list to be sorted
 
@@ -56,7 +56,7 @@ def merge_sort_bu(inArr: list):
 
     tmp = [0] * n
 
-    iterNum = math.ceil(math.log2(n)) # number of iterations
+    iterNum = math.ceil(math.log2(n))  # number of iterations
     maxIndex = math.pow(2, iterNum)
 
     for i in range(iterNum):
@@ -72,6 +72,4 @@ def merge_sort_bu(inArr: list):
                 break
 
     return arr
-
-
 

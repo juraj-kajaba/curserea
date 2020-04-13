@@ -16,8 +16,8 @@ def test_utils_2():
     # create list of collinear points
     a.append(cp.Point(200, 1000))
     a.append(cp.Point(300, 1500))
-    a.append(cp.Point(400, 2000))   
-    a.append(cp.Point(500, 2500))    
+    a.append(cp.Point(400, 2000))
+    a.append(cp.Point(500, 2500))
 
     assert cp.Utils.arePointsCollinear(a)
 
@@ -42,18 +42,17 @@ def test_utils_3():
 def getPoints():
     a = []
 
-    # create list of collinear points        
+    # create list of collinear points
     a.append(cp.Point(200, 1000))
     a.append(cp.Point(300, 1500))
-    a.append(cp.Point(400, 2000))   
-    a.append(cp.Point(500, 2500))    
+    a.append(cp.Point(400, 2000))
+    a.append(cp.Point(500, 2500))
 
-    # create another list of collinear points        
+    # create another list of collinear points
     a.append(cp.Point(200, 800))
     a.append(cp.Point(300, 1200))
-    a.append(cp.Point(400, 1600))   
-    a.append(cp.Point(500, 2000))    
-
+    a.append(cp.Point(400, 1600))
+    a.append(cp.Point(500, 2000))
 
     # append not collinear points
     a.append(cp.Point(3000, 7000))
@@ -63,30 +62,31 @@ def getPoints():
     a.append(cp.Point(4300, 8200))
     a.append(cp.Point(3000, 7500))
     a.append(cp.Point(3200, 7500))
-    a.append(cp.Point(3400, 7500))        
+    a.append(cp.Point(3400, 7500))
 
     # append collinear points
-    a.append(cp.Point(600, 3000))    
-    a.append(cp.Point(700, 3500))        
+    a.append(cp.Point(600, 3000))
+    a.append(cp.Point(700, 3500))
 
     return a
+
 
 def getTestResult():
     t = []
     t.append(cp.Point(200, 1000))
     t.append(cp.Point(300, 1500))
-    t.append(cp.Point(400, 2000))   
-    t.append(cp.Point(500, 2500))    
-    t.append(cp.Point(600, 3000))    
-    t.append(cp.Point(700, 3500))        
+    t.append(cp.Point(400, 2000))
+    t.append(cp.Point(500, 2500))
+    t.append(cp.Point(600, 3000))
+    t.append(cp.Point(700, 3500))
 
     t2 = []
     t2.append(cp.Point(200, 800))
     t2.append(cp.Point(300, 1200))
-    t2.append(cp.Point(400, 1600))   
-    t2.append(cp.Point(500, 2000))    
+    t2.append(cp.Point(400, 1600))
+    t2.append(cp.Point(500, 2000))
 
-    tls = [cp.LineSegment(t),cp.LineSegment(t2)]
+    tls = [cp.LineSegment(t), cp.LineSegment(t2)]
 
     return tls
 
@@ -98,7 +98,7 @@ def test_brute_force():
     bf = cp.BruteCollinearPoints(a)
     bf.findLineSegments()
 
-    assert bf.lineSegments == tls #Expected result
+    assert bf.lineSegments == tls  # Expected result
 
     # for b in bf.lineSegments:
     #     print(b)
@@ -111,10 +111,9 @@ def test_fast():
     ff = cp.FastCollinearPoints(a)
     ff.findLineSegments()
 
-    assert ff.lineSegments == tls #Expected result
+    assert ff.lineSegments == tls  # Expected result
     # for f in ff.lineSegments:
     #     print(f)
-
 
 
 # test_utils_1()
