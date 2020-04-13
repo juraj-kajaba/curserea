@@ -5,6 +5,7 @@ verify_ssl = true
 
 [dev-packages]
 alg = {editable = true,path = "."}
+autopep8 = "*"
 
 [packages]
 pytest = "*"

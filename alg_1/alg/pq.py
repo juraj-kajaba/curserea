@@ -1,7 +1,7 @@
 """ Implementation of priority queue as max heap resp. min heap """
 
+
 class PQ:
-     
 
     def __init__(self, keys: list = None) -> None:
         """ Creates priority queue from given keys.
@@ -10,13 +10,11 @@ class PQ:
             keys: input keys the priority queue is created from. If input
                   parameter is None, empty key array is created. 
         """
-        self._keys = [] # input keys
+        self._keys = []  # input keys
 
         if keys:
             self._keys.extend(keys)
             self._heapify()
-                
-
 
     def _compare(self, leftKey, rightKey):
         """ Compare keys in order to implement comaprision 
@@ -29,7 +27,6 @@ class PQ:
         """
         raise NotImplementedError("_compare method must be implemented.")
 
-
     def _swap(self, index1, index2) -> None:
         """ Swap two keys and values
 
@@ -41,7 +38,6 @@ class PQ:
             None
         """
         self._keys[index1], self._keys[index2] = self._keys[index2], self._keys[index1]
-
 
 
     def _sink(self, k) -> None:
@@ -63,12 +59,11 @@ class PQ:
                 idxToCompare = 2 * k + 2
 
             # Compare greater child and parent and swap them eventually
-            if self._compare(self._keys[k], self._keys[idxToCompare]) < 0: 
+            if self._compare(self._keys[k], self._keys[idxToCompare]) < 0:
                 self._swap(k, idxToCompare)
                 k = idxToCompare
             else:
                 break
-
 
 
     def _swim(self, k) -> None:
@@ -87,8 +82,6 @@ class PQ:
             self._swap(k, k // 2)
             k = k // 2
 
-
-
     def _heapify(self):
         """ Make the instance to be valid binary heap.
             Take all nodes (under leaves) and sink them (bottom-up).
@@ -102,23 +95,20 @@ class PQ:
         for i in reversed(range(self.getSize() // 2)):
             self._sink(i)
 
-
     def _getHead(self):
         """ Returns the first element and make the heap """
         # Swap first and last element, remove the last one,
         # and sink the first one in order to make it heap again
-        self._swap(0, self.getSize() -1)
+        self._swap(0, self.getSize() - 1)
         retVal = self._keys.pop()
         self._sink(0)
-        return retVal 
-
+        return retVal
 
 
     def getSize(self):
         """ Returns the size of heap
         """
         return len(self._keys)
-
 
     def insert(self, key) -> None:
         """ Inserts new key into PQ
@@ -134,9 +124,9 @@ class PQ:
         self._swim(len(self._keys) - 1)
 
 
-
 class MaxPQ(PQ):
     """ Max priority queue implementation """
+
     def _compare(self, leftKey, rightKey):
         """ Compare keys in order to implement comaprision 
             according to type of heap.
@@ -152,7 +142,7 @@ class MaxPQ(PQ):
             retVal = -1
         elif leftKey > rightKey:
             retVal = 1
-        
+
         return retVal
 
     def getMax(self):
@@ -161,12 +151,12 @@ class MaxPQ(PQ):
             Returns: max from queue
         """
 
-        return self._getHead() 
-
+        return self._getHead()
 
 
 class MinPQ(PQ):
     """ Min priority queue implementation """
+
     def _compare(self, leftKey, rightKey):
         """ Compare keys in order to implement comaprision 
             according to type of heap.
@@ -182,9 +172,8 @@ class MinPQ(PQ):
             retVal = -1
         elif leftKey < rightKey:
             retVal = 1
-        
-        return retVal
 
+        return retVal
 
     def getMin(self):
         """ Returns min from max priority queue
@@ -192,6 +181,5 @@ class MinPQ(PQ):
             Returns: min from queue
         """
 
-        return self._getHead() 
-
+        return self._getHead()
 
